@@ -48,7 +48,7 @@ const Keywords = ({ form }: { form: UseFormReturnType<FormData> }) => {
   return (
     <div>
       <motion.div variants={container} initial="hidden" animate="show">
-        <ScrollArea h={500} w={"20vw"} bg={"gray"}>
+        <ScrollArea h={500} w={"330px"} bg={"gray"}>
           <Stack align="center" justify="center" mt={10}>
             {form.values.keywords.map((keyword, index) => (
               <motion.div

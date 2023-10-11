@@ -12,16 +12,21 @@ export const parseAccountsKeywords = (accounts: AccountData[], keywords: Keyword
     finalString += keywords[i].keywordValue + " "
   }
 
+
   for (let i = 0; i < accounts.length; i++) {
-    finalString += "("
-    if (accounts[i].operator  == 'mention') {
-      finalString += accounts[i].accountValue.substring(0,1) == '@' ? accounts[i].accountValue : '@' + accounts[i].accountValue
-    } else {
-      finalString += accounts[i].operator + ":"
-      finalString += accounts[i].accountValue.substring(0,1) == '@' ? accounts[i].accountValue : '@' + accounts[i].accountValue
+    if (accounts[i].accountValue != "") {
+      finalString += "("
+      if (accounts[i].operator  == 'mention') {
+        finalString += accounts[i].accountValue.substring(0,1) == '@' ? accounts[i].accountValue : '@' + accounts[i].accountValue
+      } else {
+        finalString += accounts[i].operator + ":"
+        finalString += accounts[i].accountValue.substring(0,1) == '@' ? accounts[i].accountValue : '@' + accounts[i].accountValue
+      }
+      finalString += ") "
     }
-    finalString += ") "
   }
+
+
   if (filters.replies != FilterTypes.Default) {
     filters.replies == FilterTypes.None ? finalString += "-filter:replies " : finalString += "filter:replies "
   }

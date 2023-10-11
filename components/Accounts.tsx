@@ -45,7 +45,7 @@ const Accounts = ({ form }: { form: UseFormReturnType<FormData> }) => {
   return (
     <div>
       <motion.div variants={container} initial="hidden" animate="show">
-        <ScrollArea h={500} w={"15vw"} bg={"gray"}>
+        <ScrollArea h={500} w={"230px"} bg={"gray"}>
           <Stack align="center" justify="center" mt={10}>
             {form.values.accounts.map((_, index) => (
               <motion.div
@@ -54,7 +54,7 @@ const Accounts = ({ form }: { form: UseFormReturnType<FormData> }) => {
                 style={{ position: "relative" }}
                 key={index}
               >
-                <Paper shadow="xs" radius="md" p="sm" w="250px" withBorder>
+                <Paper shadow="xs" radius="md" p="sm" w="200px" withBorder>
                   <Group justify="space-between" mb={4}>
                     <Select
                       data={[

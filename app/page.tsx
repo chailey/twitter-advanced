@@ -13,21 +13,24 @@ import {
 import { parseAccountsKeywords } from "@/utils/parseAccountsKeywords.server";
 import {
   AppShell,
-  Burger,
   Button,
   Flex,
   Group,
   Input,
+  Modal,
   Stack,
   Text,
   Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import Link from "next/link";
 import { useState } from "react";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
+  const [modalOpened, { open, close }] = useDisclosure(false);
+  const matches = useMediaQuery("(min-width: 40em)");
   const [result, setResult] = useState("");
   const form = useForm({
     initialValues: {
@@ -64,58 +67,79 @@ function App() {
   };
 
   return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
-      padding="md"
-    >
+    <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
-        <Text>Twitter Advanced Search Tool</Text>
-        <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        </Group>
+        <Text size="lg">Twitter Advanced Search Tool</Text>
       </AppShell.Header>
 
       <AppShell.Main>
-        <Stack>
-          <form
-            onSubmit={form.onSubmit((values) =>
-              readForm(values.accounts, values.keywords, values.filters)
-            )}
-          >
-            <Group justify="center" wrap="nowrap">
-              <Keywords form={form} />
-              <Accounts form={form} />
-              <MoreFilters form={form} />
-            </Group>
-            <Flex justify={"center"} mt={20} mb={10}>
-              <Button justify="center" size="xl" radius="lg" type="submit">
-                Generate
-              </Button>
-            </Flex>
-          </form>
-
-          <Group justify="center">
-            <Input
-              placeholder="Result"
-              variant="filled"
-              value={result}
-              w={"60vw"}
-            />
-            <Tooltip label="Make sure you are logged in to your X account">
-              <Button
-                onClick={() => console.log("Generate")}
-                color="black"
-                component="a"
-                href={"https://twitter.com/search?q=" + result}
-                target="_blank"
-                disabled={!result || result == ""}
+        {!matches && (
+          <>
+            <Text size="md">
+              {" "}
+              Not available on Mobile yet. Reach out to{" "}
+              <Link href="https://twitter.com/realChrisHailey">
+                @realChrisHailey on X{" "}
+              </Link>
+              for more info{" "}
+            </Text>
+          </>
+        )}
+        {matches && (
+          <Stack>
+            <form
+              onSubmit={form.onSubmit((values) =>
+                readForm(values.accounts, values.keywords, values.filters)
+              )}
+            >
+              <Group justify="center" wrap="nowrap">
+                <Keywords form={form} />
+                <Accounts form={form} />
+              </Group>
+              <Modal
+                opened={modalOpened}
+                onClose={close}
+                title="More Filters"
+                size="lg"
+                centered
               >
-                Open in X
-              </Button>
-            </Tooltip>
-          </Group>
-        </Stack>
+                <MoreFilters form={form} />
+              </Modal>
+              <Flex justify={"center"} mt={20} mb={10}>
+                <Button color="dark" onClick={open}>
+                  More Filters
+                </Button>
+              </Flex>
+              <Flex justify={"center"} mt={20} mb={10}>
+                <Button justify="center" size="xl" radius="lg" type="submit">
+                  Generate
+                </Button>
+              </Flex>
+            </form>
+
+            <Group justify="center">
+              <Input
+                placeholder="Result"
+                variant="filled"
+                size="lg"
+                value={result}
+                w={"75vw"}
+              />
+              <Tooltip label="Make sure you are logged in to your X account">
+                <Button
+                  onClick={() => console.log("Generate")}
+                  color="black"
+                  component="a"
+                  href={"https://twitter.com/search?q=" + result}
+                  target="_blank"
+                  disabled={!result || result == ""}
+                >
+                  Open in X
+                </Button>
+              </Tooltip>
+            </Group>
+          </Stack>
+        )}
       </AppShell.Main>
     </AppShell>
   );

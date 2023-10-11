@@ -6,7 +6,7 @@ const MoreFilters = ({ form }: { form: UseFormReturnType<FormData> }) => {
   const filterVals = Object.values(Filters);
 
   return (
-    <Paper shadow="xs" p={"xl"} withBorder radius="xl">
+    <Paper shadow="xs" p={"sm"} withBorder radius="xl">
       <Stack align="center" justify="center" mt={10}>
         <SimpleGrid cols={2} spacing="sm">
           {filterVals.map((filterVal) => {
