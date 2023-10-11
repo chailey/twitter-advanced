@@ -5,8 +5,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "My Mantine app",
-  description: "I have followed setup instructions carefully",
+  title: "Twitter Advanced Search Tool",
+  description: "An easier way to build Twitter Advanced Search Queries",
 };
 
 export default function RootLayout({
