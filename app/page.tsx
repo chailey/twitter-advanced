@@ -45,12 +45,6 @@ function App() {
       },
     },
     validate: {
-      accounts: {
-        accountValue: (value) => {
-          if (value === undefined) return null;
-          return value.length < 1 ? "Account cannot be blank" : null;
-        },
-      },
       keywords: {
         keywordValue: (value) => {
           if (value === undefined) return null;
